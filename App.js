@@ -1,53 +1,17 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
-import ListItem from './src/components/ListItem/ListItem';
+import PlaceInput from './src/components/PlaceInput/PlaceInput';
+import PlaceList from './src/components/PlaceList/PlaceList';
 
-export default class App extends Component {
-  state = {
-    placeName: "",
-    places: []
-  };
-
-  placeNameChangedHandler = placeName => {
-    this.setState({placeName});
-  };
-
-  placeSubmitHandler = () => {
-    if (this.state.placeName.trim() === "") {
-      return;
-    }
-
-    this.setState(prevState => {
-      return {
-        places: prevState.places.concat(prevState.placeName)
-      };
-    });
-  };
-
-  render() {
-    const placesOutput = this.state.places.map((place, i) => (
-      <ListItem key={i} placeName={place} />
-    ));
-    return (
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="An awesome place"
-            value={this.state.placeName}
-            onChangeText={this.placeNameChangedHandler}
-            style={styles.placeInput}
-          />
-          <Button
-            title="Add"
-            style={styles.placeButton}
-            onPress={this.placeSubmitHandler}
-          />
-        </View>
-        <View style={styles.listContainer}>{placesOutput}</View>
-      </View>
-    );
-  }
+const App = () => {
+  const [places, setPlaces] = useState([]);
+  return (
+    <View style={styles.container}>
+      <PlaceInput onPlaceAdded={ value => setPlaces(places.concat({key: Math.random().toString(), value})) } />
+      <PlaceList places={ places } onItemDelete={(id) => setPlaces(places.filter(place => place.key !== id))} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -57,21 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start"
-  },
-  inputContainer: {
-    // flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  placeInput: {
-    width: "70%"
-  },
-  placeButton: {
-    width: "30%"
-  },
-  listContainer: {
-    width: "100%"
   }
 });
+
+export default  App;
