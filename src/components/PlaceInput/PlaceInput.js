@@ -9,7 +9,7 @@ const PlaceInput = ({ onPlaceAdded }) => {
       return;
     }
     onPlaceAdded(placeName);
-    setPlaceName('');
+    // setPlaceName('');
   };
 
   return (

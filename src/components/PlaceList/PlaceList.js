@@ -8,7 +8,7 @@ const PlaceList = ({ places, onItemDelete }) => {
       style={styles.listContainer}
       data={places}
       renderItem={({item}) => (
-        <ListItem placeName={item.value} onItemDelete={() => onItemDelete(item.key)} />
+        <ListItem placeName={item.name} placeImage={item.image} onItemDelete={() => onItemDelete(item.key)} />
       )}
     />
     )
