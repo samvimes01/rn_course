@@ -1,13 +1,10 @@
 import {
   ADD_PLACE,
   DELETE_PLACE,
-  SELECT_PLACE,
-  DESELECT_PLACE
-} from "./actionTypes";
+} from './actionTypes';
 
 const initialState = {
   places: [],
-  selectedPlace: null
 };
 
 export const placesReducer = (state = initialState, action) => {
@@ -30,41 +27,20 @@ export const placesReducer = (state = initialState, action) => {
     case DELETE_PLACE:
       return {
         ...state,
-        places: state.places.filter(place => place.key !== state.selectedPlace.key),
-        selectedPlace: null
+        places: state.places.filter(place => place.key !== action.key),
       };
-    case SELECT_PLACE:
-      return { ...state, selectedPlace: state.places.find(place => place.key === action.placeKey) };
-    case DESELECT_PLACE:
-      return { ...state, selectedPlace: null };
     default:
       return state;
   }
 };
 
-//Action creators
-export const addPlace = (placeName) => {
-  return {
-    type: ADD_PLACE,
-    placeName: placeName
-  };
-};
+// Action creators
+export const addPlace = placeName => ({
+  type: ADD_PLACE,
+  placeName
+});
 
-export const deletePlace = () => {
-  return {
-    type: DELETE_PLACE
-  };
-};
-
-export const selectPlace = (key) => {
-  return {
-    type: SELECT_PLACE,
-    placeKey: key
-  };
-};
-
-export const deselectPlace = () => {
-  return {
-    type: DESELECT_PLACE
-  };
-};
+export const deletePlace = key => ({
+  type: DELETE_PLACE,
+  key
+});

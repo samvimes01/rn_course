@@ -1,8 +1,7 @@
 import React from 'react';
-import { Navigation } from "react-native-navigation";
-import App from './App';
-import {name as appName} from './app.json';
+import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
+import App from './App';
 import store from './src/store';
 
 const RNRedux = () => (
@@ -11,15 +10,13 @@ const RNRedux = () => (
   </Provider>
 );
 
-//AppRegistry.registerComponent(appName, () => RNRedux);
-
-Navigation.registerComponent(`navigation.playground.RNRedux`, () => RNRedux);
+Navigation.registerComponent('navigation.playground.RNRedux', () => RNRedux);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {
       component: {
-        name: "navigation.playground.RNRedux"
+        name: 'navigation.playground.RNRedux'
       }
     }
   });

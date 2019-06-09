@@ -1,39 +1,58 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { connect } from 'react-redux';
+import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
+import store from './src/store';
 
-import PlaceInput from './src/components/PlaceInput/PlaceInput';
-import PlaceList from './src/components/PlaceList/PlaceList';
-import PlaceDetail from './src/components/PlaceDetail/PlaceDetail';
-import { addPlace, deletePlace, selectPlace, deselectPlace } from './src/store/places';
+import AuthScreen from './src/screens/Auth/Auth';
+import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
+import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
+import PlaceDetailScreen from './src/screens/PlaceDetail/PlaceDetail';
+import SideMenu from './src/screens/SideMenu/SideMenu';
 
-const App = ({ places, selectedPlace, addPlace, deletePlace, selectPlace, deselectPlace }) => {
-  return (
-    <View style={styles.container}>
-      <PlaceDetail
-        selectedPlace={selectedPlace}
-        onItemDeleted={deletePlace}
-        onModalClosed={deselectPlace}
-      />
-      <PlaceInput onPlaceAdded={ name => addPlace(name) } />
-      <PlaceList places={ places } onItemSelected={selectPlace} />
-    </View>
-  );
-}
+Navigation.registerComponent('AuthScreen', () => props => (
+  <Provider store={store}>
+    <AuthScreen {...props} />
+  </Provider>
+), () => AuthScreen);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 26,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start"
-  }
+Navigation.registerComponent('SharePlaceScreen', () => props => (
+  <Provider store={store}>
+    <SharePlaceScreen {...props} />
+  </Provider>
+), () => SharePlaceScreen);
+
+Navigation.registerComponent('FindPlaceScreen', () => props => (
+  <Provider store={store}>
+    <FindPlaceScreen {...props} />
+  </Provider>
+), () => FindPlaceScreen);
+
+Navigation.registerComponent('PlaceDetailScreen', () => props => (
+  <Provider store={store}>
+    <PlaceDetailScreen {...props} />
+  </Provider>
+), () => PlaceDetailScreen);
+
+Navigation.registerComponent('SideMenu', () => SideMenu);
+
+
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        options: {
+          topBar: {
+            title: { text: 'Login' }
+          }
+        },
+        children: [
+          {
+            component: {
+              name: 'AuthScreen',
+            }
+          }
+        ],
+      }
+    }
+  });
 });
-
-const mapStateToProps = state => ({
-  places: state.places.places,
-  selectedPlace: state.places.selectedPlace
-})
-
-export default  connect(mapStateToProps, { addPlace, deletePlace, selectPlace, deselectPlace })(App);

@@ -1,19 +1,20 @@
-import React from 'react'
+import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import ListItem from '../ListItem/ListItem';
 
-const PlaceList = ({ places, onItemSelected }) => {
-  return (
-    <FlatList 
-      style={styles.listContainer}
-      data={places}
-      renderItem={({item}) => (
-        <ListItem placeName={item.name} placeImage={item.image} onItemSelected={() => onItemSelected(item.key)} />
-      )}
-    />
-    )
-  
-}
+const PlaceList = ({ places, onItemSelected }) => (
+  <FlatList
+    style={styles.listContainer}
+    data={places}
+    renderItem={({ item }) => (
+      <ListItem
+        placeName={item.name}
+        placeImage={item.image}
+        onItemSelected={() => onItemSelected(item.key)}
+      />
+    )}
+  />
+);
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -21,4 +22,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PlaceList
+export default PlaceList;

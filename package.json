@@ -25,5 +25,22 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "plugins": ["react", "react-native"],
+    "env": {
+        "jest": true
+    },
+    "rules": {
+      "indent": [ "error", 2, { "SwitchCase": 1 }],
+      "quotes": [ "error", "single"],
+      "no-use-before-define": "off",
+      "react/jsx-filename-extension": "off",
+      "react/prop-types": "off",
+      "comma-dangle": "off",
+      "linebreak-style": "off"
+    }
   }
 }
