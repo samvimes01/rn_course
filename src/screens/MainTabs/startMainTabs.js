@@ -1,4 +1,5 @@
 import { Navigation } from 'react-native-navigation';
+import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 Navigation.events().registerNavigationButtonPressedListener(({ buttonId }) => {
@@ -15,9 +16,9 @@ Navigation.events().registerNavigationButtonPressedListener(({ buttonId }) => {
 
 const startTabs = () => {
   Promise.all([
-    Icon.getImageSource('md-map', 30),
-    Icon.getImageSource('ios-share-alt', 30),
-    Icon.getImageSource('ios-menu', 30)
+    Icon.getImageSource(Platform.OS === 'android' ? 'md-map' : 'ios-map', 30),
+    Icon.getImageSource(Platform.OS === 'android' ? 'md-share-alt' : 'ios-share', 30),
+    Icon.getImageSource(Platform.OS === 'android' ? 'md-menu' : 'ios-menu', 30),
   ]).then((sources) => {
     Navigation.setRoot({
       root: {
@@ -35,7 +36,8 @@ const startTabs = () => {
                   leftButtons: [
                     {
                       id: 'menuButton',
-                      icon: sources[2]
+                      icon: sources[2],
+                      color: 'orange'
                     }
                   ],
                   rightButtons: [],
@@ -61,6 +63,7 @@ const startTabs = () => {
                                   text: 'Find Place',
                                   icon: sources[0],
                                   testID: 'FIRST_TAB_BAR_BUTTON',
+                                  selectedIconColor: 'orange',
                                 }
                               }
                             }
@@ -82,8 +85,9 @@ const startTabs = () => {
                               options: {
                                 bottomTab: {
                                   text: 'Share Place',
-                                  icon: sources[0],
+                                  icon: sources[1],
                                   testID: 'SECOND_TAB_BAR_BUTTON',
+                                  selectedIconColor: 'orange',
                                 }
                               }
                             }

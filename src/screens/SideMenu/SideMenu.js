@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  View, StyleSheet, Text, Dimensions
+  View, StyleSheet, Text, Dimensions, TouchableOpacity, Platform
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const SideMenu = () => (
   <View
@@ -10,15 +11,34 @@ const SideMenu = () => (
       { width: Dimensions.get('window').width * 0.8 }
     ]}
   >
-    <Text>SideDrawer</Text>
+    <TouchableOpacity>
+      <View style={styles.menuItem}>
+        <Icon
+          style={styles.menuItemIcon}
+          size={30}
+          name={Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
+          color="#aaa"
+        />
+        <Text>Sign Out</Text>
+      </View>
+    </TouchableOpacity>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 22,
+    paddingTop: 50,
     backgroundColor: 'white',
     flex: 1
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    padding: 10
+  },
+  menuItemIcon: {
+    marginRight: 10
   }
 });
 
