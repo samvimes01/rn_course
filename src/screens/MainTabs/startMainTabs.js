@@ -30,75 +30,70 @@ const startTabs = () => {
             }
           },
           center: {
-            stack: {
-              children: [{
-                bottomTabs:
+            bottomTabs:
+            {
+              children: [
                 {
-                  children: [
-                    {
-                      stack: {
-                        children: [
-                          {
-                            component: {
-                              name: 'FindPlaceScreen',
-                              options: {
-                                topBar: {
-                                  title: { text: 'Find Place' },
-                                  leftButtons: [
-                                    {
-                                      id: 'menuButton',
-                                      icon: sources[2],
-                                      color: 'orange'
-                                    }
-                                  ],
-                                  rightButtons: [],
-                                },
-                                bottomTab: {
-                                  text: 'Find Place',
-                                  icon: sources[0],
-                                  testID: 'FIRST_TAB_BAR_BUTTON',
-                                  selectedIconColor: 'orange',
+                  stack: {
+                    children: [
+                      {
+                        component: {
+                          name: 'FindPlaceScreen',
+                          options: {
+                            topBar: {
+                              title: { text: 'Find Place' },
+                              leftButtons: [
+                                {
+                                  id: 'menuButton',
+                                  icon: sources[2],
+                                  color: 'orange'
                                 }
-                              }
+                              ],
+                              rightButtons: [],
+                            },
+                            bottomTab: {
+                              text: 'Find Place',
+                              icon: sources[0],
+                              testID: 'FIRST_TAB_BAR_BUTTON',
+                              selectedIconColor: 'orange',
                             }
                           }
-                        ],
+                        }
                       }
-                    },
-                    {
-                      stack: {
-                        children: [
-                          {
-                            component: {
-                              name: 'SharePlaceScreen',
-                              options: {
-                                topBar: {
-                                  title: { text: 'Share Place' },
-                                  leftButtons: [
-                                    {
-                                      id: 'menuButton',
-                                      icon: sources[2],
-                                      color: 'orange'
-                                    }
-                                  ],
-                                  rightButtons: [],
-                                },
-                                bottomTab: {
-                                  text: 'Share Place',
-                                  icon: sources[1],
-                                  testID: 'SECOND_TAB_BAR_BUTTON',
-                                  selectedIconColor: 'orange',
+                    ],
+                  }
+                },
+                {
+                  stack: {
+                    children: [
+                      {
+                        component: {
+                          name: 'SharePlaceScreen',
+                          options: {
+                            topBar: {
+                              title: { text: 'Share Place' },
+                              leftButtons: [
+                                {
+                                  id: 'menuButton',
+                                  icon: sources[2],
+                                  color: 'orange'
                                 }
-                              }
+                              ],
+                              rightButtons: [],
+                            },
+                            bottomTab: {
+                              text: 'Share Place',
+                              icon: sources[1],
+                              testID: 'SECOND_TAB_BAR_BUTTON',
+                              selectedIconColor: 'orange',
                             }
                           }
-                        ],
+                        }
                       }
-                    }
-                  ],
-                  options: {}
+                    ],
+                  }
                 }
-              }]
+              ]
             }
           }
         }
