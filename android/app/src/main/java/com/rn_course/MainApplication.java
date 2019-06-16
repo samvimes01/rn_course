@@ -17,9 +17,13 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
+import com.facebook.react.modules.core.PermissionListener;
 
-public class MainApplication extends NavigationApplication {
-    
+public class MainApplication extends NavigationApplication implements OnImagePickerPermissionsCallback {
+    private PermissionListener listener;
+
     @Override
     protected ReactGateway createReactGateway() {
         ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
@@ -42,12 +46,29 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new VectorIconsPackage(),
-            new MapsPackage()
+            new MapsPackage(),
+            new ImagePickerPackage()
         );
     }
   
     @Override
     public List<ReactPackage> createAdditionalReactPackages() {
         return getPackages();
+    }
+
+    @Override
+    public void setPermissionListener(PermissionListener listener)
+    {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        if (listener != null)
+        {
+        listener.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
