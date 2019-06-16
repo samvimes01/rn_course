@@ -36,12 +36,10 @@ export const SharePlace = ({ addPlace }) => {
   });
 
   const placeAddedHandler = () => {
-    if (placeName.value.trim() !== '') {
-      addPlace(placeName.value);
-    }
+    addPlace(placeName.value, location.value);
   };
 
-  const locationPickedHandler = location => setLocation({ value: location, valid: true });
+  const locationPickedHandler = loc => setLocation({ value: loc, valid: true });
 
   return (
     <ScrollView>
@@ -56,7 +54,7 @@ export const SharePlace = ({ addPlace }) => {
           onChangeText={placeNameChangedHandler}
         />
         <View style={styles.button}>
-          <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid} />
+          <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid || !location.valid} />
         </View>
       </View>
     </ScrollView>

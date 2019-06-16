@@ -20,7 +20,8 @@ export const placesReducer = (state = initialState, action) => {
             image: {
               uri:
                 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Dakota-Hotel-WEB.jpg'
-            }
+            },
+            location: action.location
           }
         ]
       };
@@ -35,9 +36,10 @@ export const placesReducer = (state = initialState, action) => {
 };
 
 // Action creators
-export const addPlace = placeName => ({
+export const addPlace = (placeName, location) => ({
   type: ADD_PLACE,
-  placeName
+  placeName,
+  location
 });
 
 export const deletePlace = key => ({
