@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 import { createStore, combineReducers, compose } from 'redux';
 import { placesReducer } from './places';
 

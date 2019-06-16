@@ -9,18 +9,31 @@ import HeadingText from '../../components/UI/HeadingText';
 import MainText from '../../components/UI/MainText';
 import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation';
+import validate from '../../utils/validation';
 
 import { addPlace } from '../../store/places';
 
 // eslint-disable-next-line no-shadow
 export const SharePlace = ({ addPlace }) => {
-  const [placeName, setPlaceName] = useState('');
+  const [placeName, setPlaceName] = useState({
+    value: '',
+    valid: false,
+    touched: false,
+    validationRules: {
+      notEmpty: true
+    }
+  });
 
-  const placeNameChangedHandler = value => setPlaceName(value);
+  const placeNameChangedHandler = value => setPlaceName({
+    ...placeName,
+    value,
+    valid: validate(value, placeName.validationRules),
+    touched: true,
+  });
 
   const placeAddedHandler = () => {
-    if (placeName.trim() !== '') {
-      addPlace(placeName);
+    if (placeName.value.trim() !== '') {
+      addPlace(placeName.value);
     }
   };
   return (
@@ -32,11 +45,11 @@ export const SharePlace = ({ addPlace }) => {
         <PickImage />
         <PickLocation />
         <PlaceInput
-          placeName={placeName}
+          placeData={placeName}
           onChangeText={placeNameChangedHandler}
         />
         <View style={styles.button}>
-          <Button title="Share the Place!" onPress={placeAddedHandler} />
+          <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid} />
         </View>
       </View>
     </ScrollView>
