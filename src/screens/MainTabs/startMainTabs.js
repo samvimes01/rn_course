@@ -31,34 +31,28 @@ const startTabs = () => {
           },
           center: {
             stack: {
-              options: {
-                topBar: {
-                  leftButtons: [
-                    {
-                      id: 'menuButton',
-                      icon: sources[2],
-                      color: 'orange'
-                    }
-                  ],
-                  rightButtons: [],
-                }
-              },
               children: [{
                 bottomTabs:
                 {
                   children: [
                     {
                       stack: {
-                        options: {
-                          topBar: {
-                            title: { text: 'Find Place' },
-                          }
-                        },
                         children: [
                           {
                             component: {
                               name: 'FindPlaceScreen',
                               options: {
+                                topBar: {
+                                  title: { text: 'Find Place' },
+                                  leftButtons: [
+                                    {
+                                      id: 'menuButton',
+                                      icon: sources[2],
+                                      color: 'orange'
+                                    }
+                                  ],
+                                  rightButtons: [],
+                                },
                                 bottomTab: {
                                   text: 'Find Place',
                                   icon: sources[0],
@@ -73,16 +67,22 @@ const startTabs = () => {
                     },
                     {
                       stack: {
-                        options: {
-                          topBar: {
-                            title: { text: 'Share Place' },
-                          }
-                        },
                         children: [
                           {
                             component: {
                               name: 'SharePlaceScreen',
                               options: {
+                                topBar: {
+                                  title: { text: 'Share Place' },
+                                  leftButtons: [
+                                    {
+                                      id: 'menuButton',
+                                      icon: sources[2],
+                                      color: 'orange'
+                                    }
+                                  ],
+                                  rightButtons: [],
+                                },
                                 bottomTab: {
                                   text: 'Share Place',
                                   icon: sources[1],
