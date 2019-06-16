@@ -50,3 +50,13 @@ subprojects { subproject ->
         }
     }
 }
+
+ext {
+    buildToolsVersion = "28.0.3"
+    minSdkVersion = 19
+    compileSdkVersion = 28
+    targetSdkVersion = 28
+    supportLibVersion = "28.0.0"
+    googlePlayServicesVersion = "16.1.0"
+    androidMapsUtilsVersion = "0.5+"
+}

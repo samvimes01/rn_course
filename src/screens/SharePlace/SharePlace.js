@@ -15,6 +15,10 @@ import { addPlace } from '../../store/places';
 
 // eslint-disable-next-line no-shadow
 export const SharePlace = ({ addPlace }) => {
+  const [location, setLocation] = useState({
+    value: null,
+    valid: false
+  });
   const [placeName, setPlaceName] = useState({
     value: '',
     valid: false,
@@ -36,6 +40,9 @@ export const SharePlace = ({ addPlace }) => {
       addPlace(placeName.value);
     }
   };
+
+  const locationPickedHandler = location => setLocation({ value: location, valid: true });
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -43,7 +50,7 @@ export const SharePlace = ({ addPlace }) => {
           <HeadingText>Share a Place with us!</HeadingText>
         </MainText>
         <PickImage />
-        <PickLocation />
+        <PickLocation onLocationPick={locationPickedHandler} />
         <PlaceInput
           placeData={placeName}
           onChangeText={placeNameChangedHandler}
