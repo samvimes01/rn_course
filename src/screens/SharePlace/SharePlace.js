@@ -19,6 +19,10 @@ export const SharePlace = ({ addPlace }) => {
     value: null,
     valid: false
   });
+  const [image, setImage] = useState({
+    value: null,
+    valid: false
+  });
   const [placeName, setPlaceName] = useState({
     value: '',
     valid: false,
@@ -36,10 +40,12 @@ export const SharePlace = ({ addPlace }) => {
   });
 
   const placeAddedHandler = () => {
-    addPlace(placeName.value, location.value);
+    addPlace(placeName.value, location.value, image.value);
   };
 
   const locationPickedHandler = loc => setLocation({ value: loc, valid: true });
+
+  const imagePickedHandler = img => setImage({ value: img, valid: true });
 
   return (
     <ScrollView>
@@ -47,14 +53,14 @@ export const SharePlace = ({ addPlace }) => {
         <MainText>
           <HeadingText>Share a Place with us!</HeadingText>
         </MainText>
-        <PickImage />
+        <PickImage onImagePicked={imagePickedHandler} />
         <PickLocation onLocationPick={locationPickedHandler} />
         <PlaceInput
           placeData={placeName}
           onChangeText={placeNameChangedHandler}
         />
         <View style={styles.button}>
-          <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid || !location.valid} />
+          <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid || !location.valid || !image.valid} />
         </View>
       </View>
     </ScrollView>

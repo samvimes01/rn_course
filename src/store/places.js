@@ -17,10 +17,7 @@ export const placesReducer = (state = initialState, action) => {
           {
             key: Math.random().toString(),
             name: action.placeName,
-            image: {
-              uri:
-                'https://upload.wikimedia.org/wikipedia/commons/b/b6/Dakota-Hotel-WEB.jpg'
-            },
+            image: { uri: action.image.uri },
             location: action.location
           }
         ]
@@ -36,10 +33,11 @@ export const placesReducer = (state = initialState, action) => {
 };
 
 // Action creators
-export const addPlace = (placeName, location) => ({
+export const addPlace = (placeName, location, image) => ({
   type: ADD_PLACE,
   placeName,
-  location
+  location,
+  image
 });
 
 export const deletePlace = key => ({
