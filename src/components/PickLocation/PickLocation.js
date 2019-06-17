@@ -1,18 +1,14 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+/* eslint-disable no-undef */
+import React, { useRef } from 'react';
 import {
-  View, Button, StyleSheet, Dimensions
+  View, Button, StyleSheet,
 } from 'react-native';
 import MapView from 'react-native-maps';
 
-const PickLocation = ({ onLocationPick }) => {
+const PickLocation = ({ location: { value: location, isPicked }, onLocationPick }) => {
   const map = useRef(null);
-  const [locChosen, setLocChosen] = useState(false);
-  const [location, setLocation] = useState({
-    latitude: 50.0077151,
-    longitude: 36.2444387,
-    latitudeDelta: 0.0122,
-    longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122,
-  });
 
   const pickLocationHandler = (event) => {
     const coords = event.nativeEvent.coordinate;
@@ -21,16 +17,11 @@ const PickLocation = ({ onLocationPick }) => {
       latitude: coords.latitude,
       longitude: coords.longitude
     });
-    setLocation({
-      ...location,
-      latitude: coords.latitude,
-      longitude: coords.longitude,
-    });
     onLocationPick({
+      ...location,
       latitude: coords.latitude,
       longitude: coords.longitude
     });
-    setLocChosen(true);
   };
 
   const getLocationHandler = () => {
@@ -47,7 +38,7 @@ const PickLocation = ({ onLocationPick }) => {
     },
     (err) => {
       console.error(err);
-      alert("Fetching the Position failed, please pick one manually!");
+      alert('Fetching the Position failed, please pick one manually!');
     });
   };
 
@@ -59,7 +50,7 @@ const PickLocation = ({ onLocationPick }) => {
         onPress={pickLocationHandler}
         ref={map}
       >
-        {locChosen && <MapView.Marker coordinate={location} />}
+        {isPicked && <MapView.Marker coordinate={location} />}
       </MapView>
       <View style={styles.button}>
         <Button title="Locate Me" onPress={getLocationHandler} />

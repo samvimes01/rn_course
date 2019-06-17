@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, Button, StyleSheet, ScrollView
+  View, Button, StyleSheet, ScrollView, Dimensions, ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -11,12 +11,18 @@ import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation';
 import validate from '../../utils/validation';
 
-import { addPlace } from '../../store/places';
+import { savePlace } from '../../store/places';
 
 // eslint-disable-next-line no-shadow
-export const SharePlace = ({ addPlace }) => {
+export const SharePlace = ({ savePlace, isLoading }) => {
   const [location, setLocation] = useState({
-    value: null,
+    value: {
+      latitude: 50.0077151,
+      longitude: 36.2444387,
+      latitudeDelta: 0.0122,
+      longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122,
+    },
+    isPicked: false,
     valid: false
   });
   const [image, setImage] = useState({
@@ -39,29 +45,26 @@ export const SharePlace = ({ addPlace }) => {
     touched: true,
   });
 
-  const placeAddedHandler = () => {
-    addPlace(placeName.value, location.value, image.value);
-  };
+  const placeAddedHandler = () => { savePlace(placeName.value, location.value, image.value); };
 
-  const locationPickedHandler = loc => setLocation({ value: loc, valid: true });
+  const locationPickedHandler = loc => setLocation({ value: loc, isPicked: true, valid: true });
 
   const imagePickedHandler = img => setImage({ value: img, valid: true });
 
+  let submitBtn = <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid || !location.valid || !image.valid} />;
+  if (isLoading) {
+    submitBtn = <ActivityIndicator />;
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
         <MainText>
           <HeadingText>Share a Place with us!</HeadingText>
         </MainText>
-        <PickImage onImagePicked={imagePickedHandler} />
-        <PickLocation onLocationPick={locationPickedHandler} />
-        <PlaceInput
-          placeData={placeName}
-          onChangeText={placeNameChangedHandler}
-        />
-        <View style={styles.button}>
-          <Button title="Share the Place!" onPress={placeAddedHandler} disabled={!placeName.valid || !location.valid || !image.valid} />
-        </View>
+        <PickImage image={image.value} onImagePicked={imagePickedHandler} />
+        <PickLocation location={location} onLocationPick={locationPickedHandler} />
+        <PlaceInput placeData={placeName} onChangeText={placeNameChangedHandler} />
+        <View style={styles.button}>{submitBtn}</View>
       </View>
     </ScrollView>
   );
@@ -88,4 +91,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, { addPlace })(SharePlace);
+const mapStateToProps = state => ({
+  isLoading: state.ui.isLoading
+});
+
+export default connect(mapStateToProps, { savePlace })(SharePlace);
