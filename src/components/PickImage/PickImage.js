@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View, Image, Button, StyleSheet
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-const PickImage = ({ onImagePicked }) => {
-  const [image, setImage] = useState(null);
-
+const PickImage = ({ image, onImagePicked }) => {
   const pickImageHandler = () => {
     ImagePicker.showImagePicker({ title: 'Pick an Image' }, (res) => {
       if (res.didCancel) {
@@ -14,7 +12,6 @@ const PickImage = ({ onImagePicked }) => {
       } else if (res.error) {
         console.log('Error', res.error);
       } else {
-        setImage({ uri: res.uri });
         onImagePicked({ uri: res.uri, base64: res.data });
       }
     });
