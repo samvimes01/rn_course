@@ -32,6 +32,7 @@ const startTabs = () => {
           center: {
             bottomTabs:
             {
+              id: 'BottomTabsId',
               children: [
                 {
                   stack: {

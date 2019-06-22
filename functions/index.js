@@ -52,7 +52,8 @@ exports.storeImage = functions.https.onRequest((request, response) => {
                   "/o/" +
                   encodeURIComponent(file.name) +
                   "?alt=media&token=" +
-                  uuid
+                  uuid,
+                  imagePath: '/places/' +  uuid + '.jpg',
               });
             } else {
               console.log(error);
@@ -62,8 +63,16 @@ exports.storeImage = functions.https.onRequest((request, response) => {
         )
       })
       .catch(error => {
-        console.log(token, ' Token is invalid ', error);
+        console.log('Token is invalid ', error);
         response.status(403).json({error: 'Unathorized'});
       });
   });
+});
+
+exports.deleteImage = functions.database.ref('/places/{placeId}').onDelete(snapshot => {
+  const placeData = snapshot.val();
+  const imagePath = placeData.imagePath;
+
+  const bucket = googleCloudStorage.bucket('fbs-func-test.appspot.com');
+  return bucket.file(imagePath).delete();
 });

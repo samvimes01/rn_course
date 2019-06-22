@@ -73,7 +73,12 @@ export const tryAuth = (authData, mode) => (dispatch) => {
       alert('Authentication failed, please try again!');
       dispatch(uiStopLoading());
     })
-    .then(res => res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error();
+    })
     .then((parsedRes) => {
       dispatch(uiStopLoading());
       const { idToken, expiresIn, refreshToken } = parsedRes;
@@ -129,7 +134,12 @@ export const authGetToken = () => (dispatch, getState) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
     }))
-    .then(res => res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error();
+    })
     .then((parsedRes) => {
       const { id_token, expires_in, refresh_token } = parsedRes;
       if (id_token) {
