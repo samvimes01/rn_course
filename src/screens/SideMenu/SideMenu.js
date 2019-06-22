@@ -1,17 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import {
   View, StyleSheet, Text, Dimensions, TouchableOpacity, Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SideMenu = () => (
+import { authLogout } from '../../store/auth';
+
+// eslint-disable-next-line no-shadow
+const SideMenu = ({ authLogout }) => (
   <View
     style={[
       styles.container,
       { width: Dimensions.get('window').width * 0.8 }
     ]}
   >
-    <TouchableOpacity>
+    <TouchableOpacity onPress={authLogout}>
       <View style={styles.menuItem}>
         <Icon
           style={styles.menuItemIcon}
@@ -42,4 +47,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SideMenu;
+export default connect(null, { authLogout })(SideMenu);

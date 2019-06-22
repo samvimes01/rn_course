@@ -9,19 +9,17 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
 
-
-import {} from '../../store';
-import startTabs from '../MainTabs/startMainTabs';
 import DefaultInput from '../../components/UI/DefaultInput';
 import HeadingText from '../../components/UI/HeadingText';
 import MainText from '../../components/UI/MainText';
 import ButtonWithBcgrnd from '../../components/UI/ButtonWithBcgrnd';
 import backgroundImage from '../../assets/background.jpg';
 import validate from '../../utils/validation';
-import tryAuth from '../../store/auth';
+import { tryAuth, authAutoSignIn } from '../../store/auth';
 
 export class Auth extends Component {
   state = {
@@ -60,6 +58,10 @@ export class Auth extends Component {
     Dimensions.addEventListener('change', this.updateStyles);
   }
 
+  componentDidMount() {
+    this.props.authAutoSignIn();
+  }
+
   componentWillUnmount() {
     Dimensions.removeEventListener('change', this.updateStyles);
   }
@@ -77,12 +79,11 @@ export class Auth extends Component {
     }));
   };
 
-  loginHandler = () => {
-    const { controls: { email, password } } = this.state;
+  authHandler = () => {
+    const { controls: { email, password }, authMode } = this.state;
     // eslint-disable-next-line no-shadow
     const { tryAuth } = this.props;
-    tryAuth({ email: email.value, password: password.value });
-    startTabs();
+    tryAuth({ email: email.value, password: password.value }, authMode);
   }
 
   updateInputState = (key, value) => {
@@ -136,6 +137,15 @@ export class Auth extends Component {
 
     let headingText = null;
     let confirmPasswordControl = null;
+    let submitButton = (
+      <ButtonWithBcgrnd
+        color="#29aaf4"
+        onPress={this.authHandler}
+        disabled={(!confirmPassword.valid && authMode === 'signup') || !email.valid || !password.valid}
+      >
+        Submit
+      </ButtonWithBcgrnd>
+    );
 
     if (viewMode === 'portrait') {
       headingText = (
@@ -164,6 +174,9 @@ export class Auth extends Component {
           />
         </View>
       );
+    }
+    if (this.props.isLoading) {
+      submitButton = <ActivityIndicator />;
     }
     return (
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -212,13 +225,7 @@ export class Auth extends Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          <ButtonWithBcgrnd
-            color="#29aaf4"
-            onPress={this.loginHandler}
-            disabled={!email.valid || !password.valid || (!confirmPassword.valid && authMode === 'signup')}
-          >
-            Submit
-          </ButtonWithBcgrnd>
+          {submitButton}
           <ButtonWithBcgrnd
             color="#29aaf4"
             onPress={this.switchAuthModeHandler}
@@ -264,4 +271,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, { tryAuth })(Auth);
+const mapStateToProps = state => ({
+  isLoading: state.ui.isLoading
+});
+
+export default connect(mapStateToProps, { tryAuth, authAutoSignIn })(Auth);

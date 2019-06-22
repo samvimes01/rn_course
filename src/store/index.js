@@ -7,10 +7,12 @@ import thunk from 'redux-thunk';
 
 import { placesReducer } from './places';
 import { uiReducer } from './ui';
+import { authReducer } from './auth';
 
 const rootReducer = combineReducers({
   places: placesReducer,
-  ui: uiReducer
+  ui: uiReducer,
+  auth: authReducer,
 });
 
 const composeEnhancers = __DEV__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
