@@ -12,7 +12,7 @@ import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation';
 import validate from '../../utils/validation';
 
-import { savePlace, startAddingPlace } from '../../store/places';
+import { savePlace, startAddingPlace, getPlaces } from '../../store/places';
 
 const initialLocation = {
   value: {
@@ -37,9 +37,10 @@ const initialPlaceName = {
 };
 
 // eslint-disable-next-line no-shadow
-export const SharePlace = ({ savePlace, isLoading, placeAdded, startAddingPlace }) => {
+export const SharePlace = ({ savePlace, isLoading, placeAdded, startAddingPlace, getPlaces }) => {
   useEffect(() => {
     if (placeAdded) {
+      getPlaces();
       Navigation.mergeOptions('BottomTabsId', {
         bottomTabs: {
           currentTabIndex: 0
@@ -120,4 +121,4 @@ const mapStateToProps = state => ({
   placeAdded: state.places.placeAdded
 });
 
-export default connect(mapStateToProps, { savePlace, startAddingPlace })(SharePlace);
+export default connect(mapStateToProps, { savePlace, startAddingPlace, getPlaces })(SharePlace);

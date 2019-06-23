@@ -11,7 +11,7 @@ import { getPlaces } from '../../store/places';
 const FindPlace = ({ places, getPlaces, componentId }) => {
   useEffect(() => {
     getPlaces();
-  });
+  }, []);
 
   return (
     <View>

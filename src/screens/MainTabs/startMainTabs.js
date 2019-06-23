@@ -20,8 +20,8 @@ const startTabs = () => {
     Icon.getImageSource(Platform.OS === 'android' ? 'md-share-alt' : 'ios-share', 30),
     Icon.getImageSource(Platform.OS === 'android' ? 'md-menu' : 'ios-menu', 30),
   ]).then((sources) => {
-    Navigation.setRoot({
-      root: {
+    Navigation.setStackRoot('AuthScreenId', [
+      {
         sideMenu: {
           left: {
             component: {
@@ -99,7 +99,7 @@ const startTabs = () => {
           }
         }
       }
-    });
+    ]);
   });
 };
 

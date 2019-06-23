@@ -13,6 +13,7 @@ const startAuthScreen = () => {
         children: [
           {
             component: {
+              id: 'AuthScreenId',
               name: 'AuthScreen',
             }
           }
@@ -21,7 +22,5 @@ const startAuthScreen = () => {
     }
   });
 };
-
-Navigation.events().registerAppLaunchedListener(startAuthScreen);
 
 export default startAuthScreen;
