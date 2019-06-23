@@ -46,6 +46,7 @@ const PickLocation = ({ location: { value: location, isPicked }, onLocationPick 
     <View style={styles.container}>
       <MapView
         initialRegion={location}
+        region={!isPicked ? location : null}
         style={styles.map}
         onPress={pickLocationHandler}
         ref={map}

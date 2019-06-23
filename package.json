@@ -48,8 +48,17 @@
       "jest": true
     },
     "rules": {
-      "indent": ["error", 2, {"SwitchCase": 1}],
-      "quotes": ["error", "single"],
+      "indent": [
+        "error",
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
       "no-use-before-define": "off",
       "react/jsx-filename-extension": "off",
       "react/prop-types": "off",

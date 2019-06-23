@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-picker';
 
 const PickImage = ({ image, onImagePicked }) => {
   const pickImageHandler = () => {
-    ImagePicker.showImagePicker({ title: 'Pick an Image' }, (res) => {
+    ImagePicker.showImagePicker({ title: 'Pick an Image', maxWidth: 600, maxHeight: 400 }, (res) => {
       if (res.didCancel) {
         console.log('User cancelled!');
       } else if (res.error) {

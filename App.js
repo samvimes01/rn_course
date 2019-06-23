@@ -8,6 +8,7 @@ import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
 import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
 import PlaceDetailScreen from './src/screens/PlaceDetail/PlaceDetail';
 import SideMenu from './src/screens/SideMenu/SideMenu';
+import startAuthScreen from './src/screens/Auth/startAuthScreen';
 
 Navigation.registerComponent('AuthScreen', () => props => (
   <Provider store={store}>
@@ -33,26 +34,10 @@ Navigation.registerComponent('PlaceDetailScreen', () => props => (
   </Provider>
 ), () => PlaceDetailScreen);
 
-Navigation.registerComponent('SideMenu', () => SideMenu);
+Navigation.registerComponent('SideMenu', () => props => (
+  <Provider store={store}>
+    <SideMenu {...props} />
+  </Provider>
+), () => SideMenu);
 
-
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      stack: {
-        options: {
-          topBar: {
-            title: { text: 'Login' }
-          }
-        },
-        children: [
-          {
-            component: {
-              name: 'AuthScreen',
-            }
-          }
-        ],
-      }
-    }
-  });
-});
+Navigation.events().registerAppLaunchedListener(startAuthScreen);
