@@ -59,7 +59,7 @@ export class Auth extends Component {
   }
 
   componentDidMount() {
-    // this.props.authAutoSignIn();
+    this.props.authAutoSignIn();
   }
 
   componentWillUnmount() {

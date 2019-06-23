@@ -82,7 +82,7 @@ export const tryAuth = (authData, mode) => (dispatch) => {
     .then((parsedRes) => {
       dispatch(uiStopLoading());
       const { idToken, expiresIn, refreshToken } = parsedRes;
-      if (!parsedRes.idToken) {
+      if (!idToken) {
         alert('Authentication failed, please try again!');
       } else {
         dispatch(authSaveToken(idToken, expiresIn, refreshToken));
@@ -104,28 +104,31 @@ export const authGetToken = () => (dispatch, getState) => {
   const promise = new Promise((resolve, reject) => {
     const { token, expiryDate } = getState().auth;
     if (!token || new Date(+expiryDate) <= new Date()) {
+      let fetchedToken;
       AsyncStorage.getItem('ap:auth:token')
         .catch(error => reject(error))
         .then((savedToken) => {
+          fetchedToken = tokenFromStorage;
           if (!savedToken) {
             reject();
             return;
           }
-          return [AsyncStorage.getItem('ap:auth:expiryDate'), savedToken];
+          return AsyncStorage.getItem('ap:auth:expiryDate');
         })
-        .then(([savedDate, savedToken]) => {
+        .then((savedDate) => {
           const expirationDate = new Date(+savedDate);
           const now = new Date();
           if (expirationDate > now) {
-            dispatch(authSetToken(savedToken));
-            resolve(savedToken);
+            dispatch(authSetToken(fetchedToken));
+            resolve(fetchedToken);
           } else {
             reject();
           }
         })
         .catch(error => reject(error));
+    } else {
+      resolve(token);
     }
-    resolve(token);
   });
 
   return promise.catch(error => AsyncStorage.getItem('ap:auth:refreshToken')
@@ -173,4 +176,5 @@ function authClearStorage() {
 export const authLogout = () => (dispatch) => {
   authClearStorage()
     .then(() => startAuthScreen());
+  dispatch(authRemoveToken());
 };
